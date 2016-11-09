@@ -1,5 +1,4 @@
 # Importing the dependencies
-import tensorflow as tf
 from os.path import dirname as _dirname, basename as _basename,\
         isfile as _isfile
 import glob as _glob
