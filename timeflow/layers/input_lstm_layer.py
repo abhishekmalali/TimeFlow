@@ -1,4 +1,5 @@
 from .nn_layer import NNLayer
+import tensorflow as tf
 
 __all__ = ['InputLSTMLayer']
 
