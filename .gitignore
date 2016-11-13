@@ -87,3 +87,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Adding tmp folder to gitignore
+/tmp/
