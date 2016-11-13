@@ -7,7 +7,8 @@ class AutomatedTrainingMonitor:
     def __init__(self, input_var, output_var, training_input, training_output,
                  train, cost, sess, training_steps=100,
                  validation_input=None, validation_output=None,
-                 early_stopping_rounds=None, burn_in=50):
+                 early_stopping_rounds=None, burn_in=50,
+                 summary_op=None, writer_obj=None):
         """Initialize AutomatedTrainingMonitor class
 
         Parameters
@@ -36,6 +37,10 @@ class AutomatedTrainingMonitor:
             Number of iterations to check for early stopping
         burn_in : integer (default 50)
             Burn in period for the training
+        summary_op: summary operation (default None)
+            Summary operation for tensorboard
+        writer_obj: SummaryWriter object (default None)
+            SummaryWriter object for tensorboard
         """
 
         self.input_var = input_var
@@ -53,6 +58,8 @@ class AutomatedTrainingMonitor:
         self._best_value = None
         self._early_stopped = False
         self.burn_in = burn_in
+        self.summary_op = summary_op
+        self.writer_obj = writer_obj
 
     @property
     def early_stopped(self):
@@ -83,8 +90,14 @@ class AutomatedTrainingMonitor:
 
     def train(self):
         for iter_num in range(self.training_steps):
-            self.sess.run(self.train_step,feed_dict={self.input_var:self.training_input,
-                                                     self.output_var:self.training_output})
+            if self.summary_op is not None:
+                _, summary = self.sess.run([self.train_step, self.summary_op],
+                             feed_dict={self.input_var:self.training_input,
+                                        self.output_var:self.training_output})
+                self.writer_obj.add_summary(summary, iter_num)
+            else:
+                self.sess.run(self.train_step, feed_dict={self.input_var: self.training_input,
+                                                          self.output_var: self.training_output})
             if iter_num >= self.burn_in:
                 self.validate_every_step(iter_num)
             if self._early_stopped is True:
@@ -94,6 +107,10 @@ class AutomatedTrainingMonitor:
                                                        self.output_var:self.validation_output}))
         print "Number of Iterations: ",\
               iter_num
+        if self.summary_op is not None:
+            return self.writer_obj
+        else:
+            return
 
     def reset_early_stopped(self):
         self._best_value_step = None
