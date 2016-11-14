@@ -7,7 +7,8 @@ class OutputLSTMLayer(NNLayer):
     """
     This layer squashes dimensions for the LSTM output to be usable.
     The input data has a shape of (1, ?, output_dimensions) and the output
-    for this layer is a tensor of the shape (?, output_dimensions)
+    for this layer is a tensor of the shape (?, output_dimensions).
+    If output is batched, the tensor is not squashed.
     """
     def __init__(self, output_dim, input_layer, batch_output=False):
         """Initialize InputLSTMLayer class
