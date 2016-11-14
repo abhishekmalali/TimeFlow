@@ -35,6 +35,6 @@ class InputLSTMLayer(NNLayer):
             Transformed input tensor
         """
         if self.batch_input is True:
-            return self.X
+            return tf.expand_dims(self.X, 0)[0, :, :, :]
         else:
             return tf.expand_dims(self.X, 0)
