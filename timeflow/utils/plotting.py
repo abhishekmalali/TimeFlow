@@ -77,5 +77,3 @@ def plot_residuals(predicted_series,
     if (base_path is not None and file_name is not None):
         plt.savefig(base_path+file_name)
         plt.close()
-    else:
-        plt.show()
