@@ -3,4 +3,4 @@ pytest
 matplotlib
 pytest-cov
 seaborn
-coveralls
+coverage==3.7.1
