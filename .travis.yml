@@ -18,7 +18,7 @@ install:
     - pip install --upgrade $TF_BINARY_URL
     - python setup.py install
 script:
-    - py.test --cov h2ohyperopt
+    - py.test --cov timeflow
 
 after_success:
     - coveralls
