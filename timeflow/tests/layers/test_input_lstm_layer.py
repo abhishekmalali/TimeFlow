@@ -2,7 +2,6 @@ import pytest
 import timeflow as tflow
 
 
-@pytest.fixture
 def input_lstm_layer_test():
     input_dim = 10
     batch_size = 10
