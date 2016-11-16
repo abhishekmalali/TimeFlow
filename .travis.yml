@@ -4,6 +4,7 @@ python:
 
 before_install:
   - sudo apt-get update
+  - sudo apt-get install libc6
 
 install:
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
