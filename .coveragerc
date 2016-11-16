@@ -2,4 +2,4 @@
 branch = True
 include = timeflow/*
 omit =
-   test/*
+   */test/*
