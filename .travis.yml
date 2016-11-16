@@ -33,7 +33,7 @@ install:
     fi
   - python setup.py install
 script:
-  - py.test --cov timeflow
+  - PYTHONPATH=$PWD:$PYTHONPATH py.test --cov timeflow
 
 after_success:
   - coveralls
