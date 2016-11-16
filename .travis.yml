@@ -14,7 +14,8 @@ install:
     - conda create -q -n env python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib
     - source activate env
     - "pip install -r requirements.txt"
-    - pip install tensorflow
+    - export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.11.0-cp35-cp35m-linux_x86_64.whl
+    - sudo pip install $TF_BINARY_URL
     - python setup.py install
 script:
     - py.test --cov timeflow
