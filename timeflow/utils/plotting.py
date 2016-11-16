@@ -11,7 +11,7 @@ def plot_residuals(predicted_series,
                    num_training_points,
                    num_validation_points,
                    base_path=None,
-                   file_name=None):
+                   file_name=None): # pragma: no cover
     """Plotting function for plotting the predicted series with the residuals.
 
     Parameters
