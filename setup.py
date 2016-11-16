@@ -12,4 +12,4 @@ setup(name='timeflow',
       license='MIT',
       include_package_data=True,
       packages=find_packages(),
-      install_requires=['numpy', 'scipy', 'pytest', 'matplotlib'])
+      install_requires=['numpy', 'pytest', 'pytest-cov', 'matplotlib'])
