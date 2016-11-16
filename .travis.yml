@@ -15,7 +15,7 @@ install:
     - source activate env
     - "pip install -r requirements.txt"
     - export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.11.0-cp27-none-linux_x86_64.whl
-    - sudo conda install $TF_BINARY_URL
+    - pip install $TF_BINARY_URL
     - python setup.py install
 script:
     - py.test -v --cov-report term-missing --cov timeflow
