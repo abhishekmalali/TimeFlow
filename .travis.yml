@@ -23,7 +23,8 @@ install:
   - conda info -a
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib pandas pytest h5py
   - source activate test-environment
-  - pip install pytest-cov python-coveralls pytest-xdist coverage==3.7.1
+  - pip install pytest-cov pytest-xdist coverage==3.7.1
+  - pip install --user codecov
   - "pip install -r requirements.txt"
  # install TensorFlow
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
@@ -36,4 +37,4 @@ script:
   - PYTHONPATH=$PWD:$PYTHONPATH py.test --cov timeflow
 
 after_success:
-  - coveralls
+  - codecov
