@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/abhishekmalali/TimeFlow.svg?branch=master)](https://travis-ci.org/abhishekmalali/TimeFlow) [![codecov](https://codecov.io/gh/abhishekmalali/TimeFlow/branch/master/graph/badge.svg)](https://codecov.io/gh/abhishekmalali/TimeFlow)
 # TimeFlow
 Tensorflow for Time Series Applications
 
