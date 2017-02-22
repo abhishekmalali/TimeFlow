@@ -37,4 +37,4 @@ class OutputLSTMLayer(NNLayer):
         if self.batch_output is True:
             return self.outputs
         else:
-            return self.outputs[0, :, :]
+            return self.outputs[:, 0, :]

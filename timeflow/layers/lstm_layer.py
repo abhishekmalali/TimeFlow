@@ -8,7 +8,7 @@ class LSTMLayer(NNLayer):
     This layer implements the LSTM cell.
     """
     def __init__(self, input_dim, hidden_layer_size, input_layer):
-        """Initialize LSTMLayer class
+        """Initialize LSTMLayer class.
 
         Parameters
         ----------
@@ -42,11 +42,11 @@ class LSTMLayer(NNLayer):
         self.bc = tf.Variable(tf.zeros([self.hidden_layer_size]))
 
         self.initial_hidden = tf.zeros([1, self.hidden_layer_size])
-        self.initial_hidden= tf.pack([self.initial_hidden, self.initial_hidden])
+        self.initial_hidden= tf.stack([self.initial_hidden, self.initial_hidden])
 
     def forward_step(self, previous_memory, input_):
         """
-        Generates the next forward LSTM operation
+        Generates the next forward LSTM operation.
 
         Parameters
         ----------
@@ -61,7 +61,7 @@ class LSTMLayer(NNLayer):
             New updated memory and hidden output tensors
 
         """
-        previous_hidden_state, c_prev = tf.unpack(previous_memory)
+        previous_hidden_state, c_prev = tf.unstack(previous_memory)
         # Input gate
         i= tf.sigmoid(
             tf.matmul(input_,self.Wi)+tf.matmul(previous_hidden_state,self.Ui) + self.bi
@@ -83,12 +83,12 @@ class LSTMLayer(NNLayer):
 
         # Current Hidden state
         current_hidden_state = o*tf.nn.tanh(c)
-        return tf.pack([current_hidden_state,c])
+        return tf.stack([current_hidden_state,c])
 
     # Function for getting all hidden state.
     def get_outputs(self):
         """
-        Iterates through time/ sequence to get all hidden state
+        Iterates through time/ sequence to get all hidden states.
 
         Returns
         ----------
@@ -97,8 +97,33 @@ class LSTMLayer(NNLayer):
 
         """
         # Getting all hidden state throuh time
+        inputs_shape = self.inputs.get_shape()
+        if inputs_shape[0] == 1:
+            self.inputs = tf.expand_dims(self.inputs[0, :, :], 1)
+            all_hidden_states = tf.scan(self.forward_step,
+                                        self.inputs,
+                                        initializer=self.initial_hidden,
+                                        name='states')
+            all_hidden_states = all_hidden_states[:, 0, :, :]
+        else:
+            all_hidden_states = tf.map_fn(self.get_batch_outputs,
+                                          self.inputs)
+        return all_hidden_states
+
+    def get_batch_outputs(self, single_input):
+        """
+        Iterates through time/ sequence to get all hidden states for all
+        batches.
+
+        Returns
+        ----------
+        tf.Tensor
+            Output tensor
+
+        """
+        single_input = tf.expand_dims(single_input, 1)
         all_hidden_states = tf.scan(self.forward_step,
-                                    self.inputs,
+                                    single_input,
                                     initializer=self.initial_hidden,
                                     name='states')
         all_hidden_states = all_hidden_states[:, 0, :, :]
