@@ -91,3 +91,4 @@ ENV/
 # Adding tmp and data folder to gitignore
 /tmp/
 /data/
+data/
