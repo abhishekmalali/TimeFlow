@@ -19,3 +19,7 @@ git clone https://github.com/abhishekmalali/TimeFlow.git
 cd TimeFlow
 python setup.py install
 ```
+
+###Notes
+* Auto correlation reduction network is now included in the package.
+* The library works on Tensorflow v1.0
